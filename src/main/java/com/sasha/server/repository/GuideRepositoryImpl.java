@@ -65,4 +65,5 @@ public class GuideRepositoryImpl implements GuideRepository {
         logger.trace("getAllGuides() end");
         return sessionFactory.getCurrentSession().createQuery( "FROM Guide" ).list();
     }
+
 }

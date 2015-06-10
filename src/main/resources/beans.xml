@@ -27,6 +27,7 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
                 <prop key="show_sql">true</prop>
+
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
         </property>
@@ -35,9 +36,11 @@
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/hibernate_sample" />
+        <property name="url" value="jdbc:mysql://localhost:3306/umap" />
         <property name="username" value="root" />
         <property name="password" value="helloworld" />
+
+
     </bean>
 
     <bean id="transactionManager"

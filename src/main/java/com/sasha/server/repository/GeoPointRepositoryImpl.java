@@ -38,6 +38,7 @@ public class GeoPointRepositoryImpl implements GeoPointRepository {
         for(GeoPoint e:employee)sessionFactory.getCurrentSession().save(e);
         logger.trace("createGeoPoint end");
     }
+
     public GeoPoint getGeoPoint(long id) {
         logger.trace("getGeoPoint begin with id = {}",id);
         logger.trace("getGeoPoint end");

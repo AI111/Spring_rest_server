@@ -12,6 +12,4 @@ public interface GuideRepository {
     void editGuide(Guide updatedEntity);
     void removeGuide(Guide updatedEntity);
     List<Guide> getAllGuides();
-
-
 }

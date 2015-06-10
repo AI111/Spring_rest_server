@@ -1,5 +1,7 @@
 package com.sasha.server.repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +21,9 @@ public class Guide {
     @GenericGenerator(name="increment", strategy = "increment")
     @Column(name="guide_id",unique = true, nullable = false)
     private long id;
+
+    @Column(name="locale")
+    Locale locale;
 
     @Column(name="name")
     private String  name;
@@ -50,6 +55,7 @@ public class Guide {
     @Column(name="changed")
     private Date changed;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,mappedBy ="guide")
     private List<GeoPoint> points;//= new HashSet<GeoPoint>();
 
@@ -57,8 +63,9 @@ public class Guide {
         super();
     }
 
-    public Guide( String name, double latitude, double longitude, String description, String imgUrl,
-                     String fullImgUrl, float rating, String mapCash, String dataCash, Date changed) {
+    public Guide(Locale locale, String name, double latitude, double longitude, String description, String imgUrl, String fullImgUrl,
+                 float rating, String mapCash, String dataCash, Date changed) {
+        this.locale = locale;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -71,9 +78,28 @@ public class Guide {
         this.changed = changed;
     }
 
+    public Guide(long id, Locale locale, String name, double latitude, double longitude, String description, String imgUrl,
+                 String fullImgUrl, float rating, String mapCash, String dataCash, Date changed) {
+        this.id = id;
+        this.locale = locale;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.fullImgUrl = fullImgUrl;
+        this.rating = rating;
+        this.mapCash = mapCash;
+        this.dataCash = dataCash;
+        this.changed = changed;
+    }
 
-    public long getId() {
-        return id;
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
     }
 
     public String getName() {
@@ -128,7 +154,7 @@ public class Guide {
         return rating;
     }
 
-    public void setRating(byte rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -162,15 +188,13 @@ public class Guide {
 
     public void setPoints(List<GeoPoint> points) {
         this.points = points;
-        for(GeoPoint point:points){
-            point.setGuide(this);
-        }
     }
 
     @Override
     public String toString() {
-        return "CityGuide{" +
+        return "Guide{" +
                 "id=" + id +
+                ", locale=" + locale +
                 ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
